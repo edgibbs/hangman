@@ -1,0 +1,2 @@
+%{"dictionary": {:git, "https://github.com/edgibbs/dictionary.git", "68547bb9bc9005ba3b681b8dfdde4803bbf651d2", []},
+  "inflex": {:hex, :inflex, "1.8.1", "9fa9684ff1a872eab7415c0be500cc1b7782f28da6ed75423081e75f92831b1c", [:mix], [], "hexpm"}}
