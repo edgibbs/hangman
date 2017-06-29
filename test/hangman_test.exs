@@ -6,6 +6,6 @@ defmodule HangmanTest do
     assert game.turns_left == 7
     assert game.game_state == :initializing
     assert length(game.letters) >= 1
-    assert Regex.match?(~r/[a-z]/, List.first(game.letters))
+    assert Enum.all?(game.letters, fn letter -> Regex.match?(~r/[a-z]/, letter) end)
   end
 end
