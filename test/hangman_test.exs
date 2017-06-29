@@ -8,4 +8,11 @@ defmodule HangmanTest do
     assert length(game.letters) >= 1
     assert Enum.all?(game.letters, fn letter -> Regex.match?(~r/[a-z]/, letter) end)
   end
+
+  test "state is unchanged for won and lost game" do
+    for state <- [ :won, :lost ] do
+      game = Hangman.new_game |> Map.put(:game_state, state)
+      assert { ^game, _ } = Hangman.make_move(game, "x")
+    end
+  end
 end
