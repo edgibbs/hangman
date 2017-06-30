@@ -5,6 +5,7 @@ defmodule HangmanTest do
     game = Hangman.new_game
     assert game.turns_left == 7
     assert game.game_state == :initializing
+    assert game.used == MapSet.new()
     assert length(game.letters) >= 1
     assert Enum.all?(game.letters, fn letter -> Regex.match?(~r/[a-z]/, letter) end)
   end
@@ -14,5 +15,19 @@ defmodule HangmanTest do
       game = Hangman.new_game |> Map.put(:game_state, state)
       assert { ^game, _ } = Hangman.make_move(game, "x")
     end
+  end
+
+  test "first occurance of a letter not already used" do
+    game = Hangman.new_game
+    { game, _tally } = Hangman.make_move(game, "x")
+    assert game.game_state != :already_used
+  end
+
+  test "state is also unchanged for prior guessed letter" do
+    game = Hangman.new_game
+    { game, _tally } = Hangman.make_move(game, "x")
+    assert game.game_state != :already_used
+    { game, _tally } = Hangman.make_move(game, "x")
+    assert game.game_state == :already_used
   end
 end
