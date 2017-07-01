@@ -67,4 +67,13 @@ defmodule HangmanTest do
     { game, _tally } = Hangman.make_move(game, "g")
     assert game.game_state == :lost
   end
+
+  test "can get the tally of existing game" do
+    game = Hangman.new_game("wible")
+    { game, _tally } = Hangman.make_move(game, "w")
+    tally = Hangman.tally(game)
+    assert tally.game_state == :good_guess
+    assert tally.turns_left == 7
+    assert tally.letters == ~w[w _ _ _ _]
+  end
 end
