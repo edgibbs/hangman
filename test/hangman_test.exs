@@ -13,7 +13,17 @@ defmodule HangmanTest do
   test "state is unchanged for won and lost game" do
     for state <- [ :won, :lost ] do
       game = Hangman.new_game |> Map.put(:game_state, state)
-      assert { ^game, _ } = Hangman.make_move(game, "x")
+      assert { ^game, _tally } = Hangman.make_move(game, "x")
+    end
+  end
+
+  test "must guess with a lower case ascii letter" do
+    game = Hangman.new_game
+    assert_raise FunctionClauseError, fn ->
+      Hangman.make_move(game, "X")
+    end
+    assert_raise FunctionClauseError, fn ->
+      Hangman.make_move(game, "1")
     end
   end
 

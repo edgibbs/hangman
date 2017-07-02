@@ -9,6 +9,9 @@ defmodule Hangman.Game do
     used: MapSet.new
   )
 
+  defmacro is_lowercase_letter(letter) do
+    quote do: unquote(letter) in ~w(a b c d e f g h i j k l m n o p q r s t u v w x y z)
+  end
 
   def new_game do
     new_game(Dictionary.random_word)
@@ -21,12 +24,11 @@ defmodule Hangman.Game do
   end
 
   def make_move(game = %{ game_state: state }, _) when state in [:won, :lost] do
-    { game, tally(game) }
+    game
   end
 
-  def make_move(game, guess) do
-    game = accept_move(game, guess, MapSet.member?(game.used, guess))
-    { game, tally(game) }
+  def make_move(game, guess) when is_lowercase_letter(guess) do
+    accept_move(game, guess, MapSet.member?(game.used, guess))
   end
 
   def tally(game) do
