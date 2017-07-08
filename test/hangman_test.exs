@@ -85,5 +85,6 @@ defmodule HangmanTest do
     assert tally.game_state == :good_guess
     assert tally.turns_left == 7
     assert tally.letters == ~w[w _ _ _ _]
+    assert tally.used == MapSet.new(["w"])
   end
 end
