@@ -2,7 +2,7 @@ defmodule HangmanTest do
   use ExUnit.Case
 
   test "can create a new game state" do
-    {:ok, pid } = Hangman.new_game
+    {:ok, pid } = Hangman.new_game("stuff")
     game = Hangman.tally(pid)
     assert game.turns_left == 7
     assert game.game_state == :initializing
@@ -14,7 +14,7 @@ defmodule HangmanTest do
   @tag :capture_log
   test "must guess with a lower case ascii letter not upper case" do
     Process.flag :trap_exit, true
-    { :ok, game_pid } = Hangman.new_game
+    { :ok, game_pid } = Hangman.new_game("stuff")
     catch_exit do
       Hangman.make_move(game_pid, "X")
     end
@@ -24,7 +24,7 @@ defmodule HangmanTest do
   @tag :capture_log
   test "must guess with a lower case ascii letter not a number" do
     Process.flag :trap_exit, true
-    { :ok, game_pid } = Hangman.new_game
+    { :ok, game_pid } = Hangman.new_game("stuff")
     catch_exit do
       Hangman.make_move(game_pid, "1")
     end
@@ -32,13 +32,13 @@ defmodule HangmanTest do
   end
 
   test "first occurance of a letter not already used" do
-    { :ok, game_pid } = Hangman.new_game
+    { :ok, game_pid } = Hangman.new_game("stuff")
     tally = Hangman.make_move(game_pid, "x")
     assert tally.game_state != :already_used
   end
 
   test "state is also unchanged for prior guessed letter" do
-    { :ok, game_pid } = Hangman.new_game
+    { :ok, game_pid } = Hangman.new_game("stuff")
     tally = Hangman.make_move(game_pid, "x")
     assert tally.game_state != :already_used
     new_tally = Hangman.make_move(game_pid, "x")
