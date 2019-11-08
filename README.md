@@ -3,6 +3,7 @@
 **TODO: Add description**
 
 ## Installation
+nope
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `hangman` to your list of dependencies in `mix.exs`:
